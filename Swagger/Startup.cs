@@ -41,16 +41,16 @@ namespace Swagger
                 {
                     
                     version = "V1",
-                    title = "Poduct API",
+                    title = "Poduct API"
                     description = "Ürün Ekleme/Silme/Güncelleme iþlemlerini gerçekleþtiren api",
                     contact = new Contact
                     {
                      email ="celikberkan1@outlook.com",
-                     name ="Berkan Çelik"
+                     name ="Berkan Çelik",
                      url = "www.berkan.com"
                     }
                 });
-                var xmlFiles = $"{ Assembly.GetExecutingAssembly().GetName()}.xml";
+                var xmlFiles = $"{ Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 //Combine path leri birleþtirmektedir.
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFiles);
                 gen.IncludeXmlComments(xmlPath); 
@@ -74,7 +74,7 @@ namespace Swagger
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Swagger v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/productV1/swagger.json", "Swagger v1"));
             }
 
             app.UseHttpsRedirection();
