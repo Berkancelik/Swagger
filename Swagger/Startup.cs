@@ -9,9 +9,12 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Swagger.Models;
+using Swashbuckle.Swagger;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Swagger
@@ -32,7 +35,30 @@ namespace Swagger
             {
                 opts.UseSqlServer(Configuration["ConnectionString"]);
             });
+            services.AddSwaggerGen(gen =>
+            {
+                gen.SwaggerDoc("productV1", new Info
+                {
+                    
+                    version = "V1",
+                    title = "Poduct API",
+                    description = "Ürün Ekleme/Silme/Güncelleme iþlemlerini gerçekleþtiren api",
+                    contact = new Contact
+                    {
+                     email ="celikberkan1@outlook.com",
+                     name ="Berkan Çelik"
+                     url = "www.berkan.com"
+                    }
+                });
+                var xmlFiles = $"{ Assembly.GetExecutingAssembly().GetName()}.xml";
+                //Combine path leri birleþtirmektedir.
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFiles);
+                gen.IncludeXmlComments(xmlPath); 
+            });
 
+            var xmlFiles = $"{ Assembly.GetExecutingAssembly().GetName()}.xml";
+            //Combine path leri birleþtirmektedir.
+            var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFiles);
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -56,6 +82,12 @@ namespace Swagger
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/swagger/v1/swagger.json","Product API");
+            });
 
             app.UseEndpoints(endpoints =>
             {

@@ -1,4 +1,4 @@
-﻿ using System;
+﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -19,7 +19,7 @@ namespace Swagger.Models
 
         public virtual DbSet<Product> Products { get; set; }
 
-   
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
